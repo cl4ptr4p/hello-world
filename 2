@@ -26,7 +26,7 @@ int main(){
      
     for(i = 0; i < n + 1; i ++){
         was[i] = false;
-        ans[i] = 409600;
+        ans[i] = 40960000000;
     }
  
      
@@ -39,7 +39,6 @@ int main(){
 //      printf("%c\n", ' ');
     }
  
-    u = start;
     ans[start] = 0;
      
      
@@ -51,19 +50,17 @@ int main(){
             }
         }
          
-        if(ans[u] == 409600){
+        if(ans[u] == 40960000000){
             break;
         }
          
          
         was[u] = true;
-        long long  bufuf;
          
         for(j = 1; j <= n; j++){
             if(g[u][j] > 0){
                 v = j;
-                bufuf = g[u][j];
-                len = ans[u] + bufuf;
+                len = ans[u] + g[u][j];
                 if(len < ans[j]){
                     ans[j] = len;
                 }
@@ -72,10 +69,10 @@ int main(){
          
     }
  
-    if(ans[end] < 409600){
+    if(ans[end] < 40960000000){
         fprintf(out, "%lld ", ans[end]);
     }else{
-        fprintf(out, "%lld ", -1);
+        fprintf(out, "%d ", -1);
     }
      
      
