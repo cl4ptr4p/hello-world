@@ -1,0 +1,86 @@
+#pragma comment (linker, "/STACK: 100000000")
+ 
+#include "stdio.h"
+#include "math.h"
+#include "algorithm"
+#include "vector"
+ 
+using namespace std;
+ 
+long long int g[2002][2002];
+ 
+int main(){
+    FILE *in  = fopen("pathmgep.in", "r");
+    FILE *out = fopen("pathmgep.out", "w");
+     
+     
+    long long int n, m, i, j, b, cnt = 0, start, end, v, u;
+     
+     
+    fscanf(in, "%lld %lld %lld", &n, &start, &end);
+ 
+     
+    long long int  *ans = new long long int [n + 1], len , a;
+    bool *was = new bool[n + 1]; // was - visited
+ 
+     
+    for(i = 0; i < n + 1; i ++){
+        was[i] = false;
+        ans[i] = 409600;
+    }
+ 
+     
+    for(i = 1; i < n + 1; i++){
+        for(j = 1; j < n + 1; j++){
+            fscanf(in, "%lld ", &a);
+            g[i][j] = a;
+//          printf("%lld ", g[i][j]);
+        }
+//      printf("%c\n", ' ');
+    }
+ 
+    u = start;
+    ans[start] = 0;
+     
+     
+    for(i = 0; i < n; i++){
+        u = -1;
+        for(j = 1; j <= n; j++){
+            if((!was[j]) && ((u == -1) || (ans[j] < ans[u]))){
+                u = j;  
+            }
+        }
+         
+        if(ans[u] == 409600){
+            break;
+        }
+         
+         
+        was[u] = true;
+        long long  bufuf;
+         
+        for(j = 1; j <= n; j++){
+            if(g[u][j] > 0){
+                v = j;
+                bufuf = g[u][j];
+                len = ans[u] + bufuf;
+                if(len < ans[j]){
+                    ans[j] = len;
+                }
+            }
+        }
+         
+    }
+ 
+    if(ans[end] < 409600){
+        fprintf(out, "%lld ", ans[end]);
+    }else{
+        fprintf(out, "%lld ", -1);
+    }
+     
+     
+    fclose(in);
+    fclose(out);
+ 
+    return 0;
+}
